@@ -1,0 +1,4 @@
+framework module UBARViewer {
+  header "UBARViewer-Swift.h"
+  requires objc
+}

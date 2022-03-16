@@ -1,0 +1,384 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name UBARViewer
+import AFNetworking
+import ARKit
+import AVFoundation
+import Foundation
+import Lottie
+import QuartzCore
+import SceneKit
+import Swift
+import UBGear
+import UICircularProgressRing
+import UIKit.UIGestureRecognizerSubclass
+import UIKit
+import _Concurrency
+@available(iOS 11.3, *)
+@objc public enum DetectingState : Swift.Int {
+  case initializing = 0
+  case notAvailable
+  case relocalizing
+  case excessiveMotion
+  case insufficientFeatures
+  case insufficientFeaturesInWall
+  case insufficientLight
+  case tooClose
+  case tooFar
+  case normal
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum RenderingMode : Swift.Int {
+  case FinalRender
+  case WireFrame
+  case Combine
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 11.3, *)
+extension UBARViewer.ARViewer {
+  @objc @_Concurrency.MainActor(unsafe) public static var kSampleAssetId: Swift.String
+  @objc @_Concurrency.MainActor(unsafe) public static func isSupported() -> Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func requestFigure(assetId: Swift.String = ARViewer.kSampleAssetId, token: Swift.String? = nil)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func requestFigure(json: Swift.String)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func requestFigure(_ figure: UBARViewer.Figure)
+  @_Concurrency.MainActor(unsafe) public func requestFigures(assetIds: [Swift.String], token: Swift.String? = nil)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func copyFigure(figure: UBARViewer.Figure)
+  @_Concurrency.MainActor(unsafe) public func downloadFigures(assetIds: [Swift.String], token: Swift.String? = nil)
+  @_Concurrency.MainActor(unsafe) public func requestCancel(assetId: Swift.String)
+  @_Concurrency.MainActor(unsafe) public func requestCancel()
+  @_Concurrency.MainActor(unsafe) public func toggleFlash()
+  @_Concurrency.MainActor(unsafe) public func setAutoFocus(enabled: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func setShadow(enabled: Swift.Bool)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func getLightAngle() -> SceneKit.SCNVector3
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setLightDirection(x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func getShadowQuality() -> Swift.Float
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setShadowQuality(_ quality: Swift.Float)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func captureScene() -> UIKit.UIImage
+  @_Concurrency.MainActor(unsafe) public func resetScene()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func resetEnvironment()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func changeToOriginSize()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func changeToScale(ratio: Swift.Float, allowAnimation: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func changeToDefaultSize()
+  @_Concurrency.MainActor(unsafe) public func changeRotationFigure(angle: Swift.Float)
+  @_Concurrency.MainActor(unsafe) public func setRotationFigure(degree: Swift.Float)
+  @_Concurrency.MainActor(unsafe) public func figureRotation() -> Swift.Float
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func deleteFigure(figure: UBARViewer.Figure)
+  @available(iOS 12.0, *)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setRRFMode(isEnabled: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func changeScene(renderingMode: UBARViewer.RenderingMode)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func unSelectFigure()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func isPlaneDetected() -> Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func placeFigure()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setViewerMode(feature: UBARViewer.FeatureType)
+  @_Concurrency.MainActor(unsafe) public func setReticle(isHidden: Swift.Bool)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func measure()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func undo()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class UBNode : SceneKit.SCNNode {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var geometry: SceneKit.SCNGeometry? {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set(value)
+  }
+  @objc override dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@available(iOS 11.3, *)
+extension UBARViewer.ARViewer {
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func run(trackingMode: UBARViewer.TrackingMode = .none)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func pause()
+}
+@available(iOS 11.3, *)
+extension UBARViewer.ARViewer : ARKit.ARSCNViewDelegate, ARKit.ARSessionDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, updateAtTime time: Foundation.TimeInterval)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, nodeFor anchor: ARKit.ARAnchor) -> SceneKit.SCNNode?
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, didAdd node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, didUpdate node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, didRemove node: SceneKit.SCNNode, for anchor: ARKit.ARAnchor)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func session(_ session: ARKit.ARSession, cameraDidChangeTrackingState camera: ARKit.ARCamera)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func session(_ session: ARKit.ARSession, didFailWithError error: Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func sessionWasInterrupted(_ session: ARKit.ARSession)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func sessionInterruptionEnded(_ session: ARKit.ARSession)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func sessionShouldAttemptRelocalization(_ session: ARKit.ARSession) -> Swift.Bool
+}
+@available(iOS 11.3, *)
+extension UBARViewer.ARViewer : UBARViewer.ARViewerDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func closeARViewer()
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func selectProduct(selectedFigure: UBARViewer.Figure?)
+}
+@objc public enum FeatureType : Swift.Int {
+  case AR = 0
+  case QR
+  case ECO
+  case Measure
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 11.3, *)
+@objc public enum TrackingMode : Swift.Int {
+  case none
+  case horizontal
+  case vertical
+  case all
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 11.3, *)
+@objc public protocol ARViewerDelegate {
+  @objc optional func permissionAuthorized(_ authorized: Swift.Bool)
+  @objc optional func findPlane()
+  @objc optional func closeARViewer()
+  @objc optional func didPlace(figure: UBARViewer.Figure)
+  @objc optional func selectProduct(selectedFigure: UBARViewer.Figure?)
+  @objc optional func rotateChanged(selectedFigure: UBARViewer.Figure)
+  @objc optional func scaleChanged(selectedFigure: UBARViewer.Figure)
+  @objc optional func qrDetected(url: Foundation.URL?)
+  @objc optional func session(updateAtTime time: Foundation.TimeInterval, rayingInPlane: Swift.Bool)
+  @objc optional func session(state changed: UBARViewer.DetectingState)
+}
+@objc @_inheritsConvenienceInitializers @available(iOS 11.3, *)
+@_Concurrency.MainActor(unsafe) open class ARViewer : UIKit.UIView {
+  @objc public enum State : Swift.Int {
+    case Configure = 0
+    case Run
+    case Paused
+    case Invalid
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var arSceneView: UBARViewer.ARViewerSCNView
+  @objc @_Concurrency.MainActor(unsafe) public var session: ARKit.ARSession {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var loadedFigures: [UBARViewer.Figure] {
+    get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var featureMode: UBARViewer.FeatureType {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: UBARViewer.ARViewerDelegate?
+  @objc @_Concurrency.MainActor(unsafe) public var selectedFigure: UBARViewer.Figure? {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var state: UBARViewer.ARViewer.State {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var measurement: UBARViewer.ARMeasurement {
+    @objc get
+    @objc set(value)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var contentsURL: Swift.String {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var isRRF: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var isShadowEnabled: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var preferredFramePerSecond: Swift.Int {
+    @objc get
+    @objc set(newValue)
+  }
+  @_Concurrency.MainActor(unsafe) public var useOnBoardingView: Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+}
+@available(iOS 11.3, *)
+extension UBARViewer.Figure {
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func setStyle(style: UBGear.UBAsset.UBStyle, progress: ((Swift.Double) -> Swift.Void)? = nil, completion: (() -> Swift.Void)? = nil)
+}
+@objc public enum FigureState : Swift.Int {
+  case Loaded
+  case Preloaded
+  case Placed
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 11.3, *)
+@objc public protocol FigureAppearanceDelegate {
+  @objc optional func shouldHiddenPreloadingFigure() -> Swift.Bool
+  @objc optional func opacityPreloadingFigure() -> CoreGraphics.CGFloat
+}
+@objc @_inheritsConvenienceInitializers @available(iOS 11.3, *)
+@objcMembers @_Concurrency.MainActor(unsafe) public class Figure : UBARViewer.UBNode {
+  @objc @_Concurrency.MainActor(unsafe) public var asset: UBGear.UBAsset? {
+    @objc get
+    @objc set(value)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var figureRotation: Swift.Float {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var fitScale: SceneKit.SCNVector3 {
+    @objc get
+    @objc set(newValue)
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var scale: SceneKit.SCNVector3 {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set(newValue)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var state: UBARViewer.FigureState {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var style: UBGear.UBAsset.UBStyle?
+  @objc @_Concurrency.MainActor(unsafe) public var isSelected: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var zoomable: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var isSelectionHidden: Swift.Bool {
+    @objc get
+    @objc set(value)
+  }
+  @objc deinit
+  @objc override dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor(unsafe) public class PassthroughView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) override dynamic public func point(inside point: CoreGraphics.CGPoint, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+@objcMembers public class ARMeasurement : ObjectiveC.NSObject {
+  @objc public var measuredLines: [UBARViewer.MeasuredLine] {
+    @objc get
+  }
+  @objc public var currentLine: UBARViewer.MeasuredLine? {
+    @objc get
+  }
+  @objc deinit
+}
+@available(iOS 11.3, *)
+open class FigureLoader : UBARViewer.FigureLoadDelegate {
+  weak public var delegate: UBARViewer.FigureLoadDelegate?
+  weak public var apperance: UBARViewer.FigureAppearanceDelegate?
+  public init()
+  public func loadFigure(assetId: Swift.String, token: Swift.String? = nil, completion: ((UBARViewer.Figure) -> Swift.Void)? = nil)
+  public func loadFigure(url: Foundation.URL, completion: ((UBARViewer.Figure) -> Swift.Void)? = nil)
+  public func loadFigure(json: Swift.String, completion: ((UBARViewer.Figure) -> Swift.Void)? = nil)
+  public func loadFigures(assetIds: [Swift.String], token: Swift.String? = nil)
+  public func downloadFigure(assetId: Swift.String, token: Swift.String? = nil, completion: ((UBARViewer.Figure) -> Swift.Void)? = nil)
+  public func downloadFigures(assetIds: [Swift.String], token: Swift.String? = nil)
+  public func copyFigure(figure: UBARViewer.Figure, completion: @escaping (UBARViewer.Figure) -> Swift.Void)
+  @objc public func onDownloadProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @objc public func onDownload(assetId: Swift.String)
+  @objc public func onDownloadComplete(assetIds: [Swift.String], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+  @objc public func onLoadingProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @objc public func onLoad(figure: UBARViewer.Figure)
+  @objc public func onLoadComplete(figures: [UBARViewer.Figure], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+  @objc public func onFail(assetId: Swift.String, errorCode: Swift.String?, message: Swift.String?)
+  @objc deinit
+}
+@objc public protocol FigureViewDelegate {
+  @objc optional func dimensionBoxDidAppear()
+  @objc optional func dimensionBoxDidDisappear()
+  @objc optional func cameraInertiaWillStart()
+  @objc optional func cameraInertiaDidEnd()
+}
+@objc @_inheritsConvenienceInitializers @available(iOS 11.3, *)
+@_Concurrency.MainActor(unsafe) open class FigureView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public var scnView: SceneKit.SCNView!
+  @objc @_Concurrency.MainActor(unsafe) weak public var figure: UBARViewer.Figure? {
+    @objc get
+    @objc set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var enableDefaultPinchGesture: Swift.Bool {
+    get
+    set(value)
+  }
+  @_Concurrency.MainActor(unsafe) public var enableDefaultTapGesture: Swift.Bool {
+    get
+    set(value)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var sceneBackgroundColor: UIKit.UIColor {
+    @objc get
+    @objc set(value)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var backgroundIntensity: CoreGraphics.CGFloat {
+    @objc get
+    @objc set(value)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var contentsURL: Swift.String {
+    @objc get
+    @objc set(newValue)
+  }
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: UBARViewer.FigureViewDelegate?
+  @objc @_Concurrency.MainActor(unsafe) public var isDimensionBoxEnabled: Swift.Bool {
+    @objc get
+    @objc set(newValue)
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+  @_Concurrency.MainActor(unsafe) public func detachFigure()
+  @objc @_Concurrency.MainActor(unsafe) public func requestFigure(uuid: Swift.String = ARViewer.kSampleAssetId, token: Swift.String? = nil, thumb: Foundation.URL? = nil)
+  @objc @_Concurrency.MainActor(unsafe) public func requestFigure()
+  @objc @_Concurrency.MainActor(unsafe) public func requestFigure(json: Swift.String)
+}
+@available(iOS 11.3, *)
+extension UBARViewer.FigureView : UBARViewer.FigureLoadDelegate, UBARViewer.FigureAppearanceDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onDownloadProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onDownload(assetId: Swift.String)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onDownloadComplete(assetIds: [Swift.String], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onLoadingProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onLoad(figure: UBARViewer.Figure)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onLoadComplete(figures: [UBARViewer.Figure], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func onFail(assetId: Swift.String, errorCode: Swift.String?, message: Swift.String?)
+}
+@available(iOS 11.3, *)
+extension UBARViewer.FigureView : SceneKit.SCNSceneRendererDelegate, SceneKit.SCNCameraControllerDelegate, UIKit.UIGestureRecognizerDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func renderer(_ renderer: SceneKit.SCNSceneRenderer, updateAtTime time: Foundation.TimeInterval)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func cameraInertiaWillStart(for cameraController: SceneKit.SCNCameraController)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func cameraInertiaDidEnd(for cameraController: SceneKit.SCNCameraController)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+@available(iOS 11.3, *)
+@objc public protocol FigureLoadDelegate {
+  @objc optional func onDownloadProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @objc optional func onDownload(assetId: Swift.String)
+  @objc optional func onDownloadComplete(assetIds: [Swift.String], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+  @objc optional func onLoadingProgress(assetId: Swift.String, progress: Swift.Double, total: Swift.Double)
+  @objc optional func onLoad(figure: UBARViewer.Figure)
+  @objc optional func onFail(assetId: Swift.String, errorCode: Swift.String?, message: Swift.String?)
+  @objc optional func onLoadComplete(figures: [UBARViewer.Figure], requestCount: Swift.Int, successCount: Swift.Int, failCount: Swift.Int)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+@objcMembers @_Concurrency.MainActor(unsafe) public class ARViewerSCNView : ARKit.ARSCNView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var scene: SceneKit.SCNScene {
+    @_Concurrency.MainActor(unsafe) @objc get
+    @_Concurrency.MainActor(unsafe) @objc set(value)
+  }
+  @objc deinit
+}
+extension UIKit.UIColor {
+  public convenience init?(hex: Swift.String)
+}
+@_hasMissingDesignatedInitializers @available(iOS 11.3, *)
+@objc @_Concurrency.MainActor(unsafe) public class MeasuredLine : UBARViewer.UBNode {
+  @objc @_Concurrency.MainActor(unsafe) public var distance: Swift.Float {
+    @objc get
+  }
+  @objc deinit
+}

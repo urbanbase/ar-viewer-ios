@@ -1,0 +1,50 @@
+disabled_rules:
+########## Required ##########
+- line_length
+- identifier_name
+- shorthand_operator
+- function_body_length
+- trailing_whitespace
+########## Optional ##########
+- comment_spacing
+- colon
+- comma
+- type_name
+- nesting
+- unused_setter_value
+- cyclomatic_complexity
+- multiple_closures_with_trailing_closure
+- redundant_string_enum_value
+- unused_optional_binding
+- syntactic_sugar
+    
+opt_in_rules:
+    #- missing_docs
+    - empty_count
+    - empty_collection_literal
+    - first_where
+    - modifier_order
+    - toggle_bool
+    - anyobject_protocol
+
+included:
+excluded:
+    - Pods
+    - ARViewer/View/ARScale/*
+
+force_cast:
+    severity: warning
+file_length:
+    warning: 1000
+    error: 1500
+type_body_length:
+    warning: 500
+    error: 750
+
+custom_rules:
+    public_should_be_objc:
+        excluded: ".*Test\\.swift"
+        name: "Public Keyword With ObjC"
+        regex: "(?<![@objc |@objcMembers ])public"
+        message: "public keyword should be @objc function(variable) "
+        severity: error
